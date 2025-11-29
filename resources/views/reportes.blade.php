@@ -61,7 +61,7 @@
   <tbody>
     @foreach($comprasMensuales as $c)
       <tr>
-        <td>{{ $c->mes }}</td>
+        <td>{{ \Carbon\Carbon::create()->month($c->mes)->locale('es')->monthName }}</td>
         <td>${{ number_format($c->total, 0, ',', '.') }}</td>
       </tr>
     @endforeach
@@ -79,7 +79,7 @@
   <tbody>
     @foreach($ventasMensuales as $v)
       <tr>
-        <td>{{ $v->mes }}</td>
+        <td>{{ \Carbon\Carbon::create()->month($v->mes)->locale('es')->monthName }}</td>
         <td>${{ number_format($v->total, 0, ',', '.') }}</td>
       </tr>
     @endforeach

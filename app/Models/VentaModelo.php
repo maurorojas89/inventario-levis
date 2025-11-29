@@ -11,11 +11,17 @@ class VentaModelo extends Model
     protected $fillable = [
         'id_cliente',
         'fechaVenta',
-        'estadoVenta'
+        'estadoVenta',
+        'totalVenta' // nuevo campo para el total general
     ];
 
     public function cliente()
     {
         return $this->belongsTo(ClienteModelo::class, 'id_cliente', 'id_cliente');
     }
-}
+
+    public function detalles()
+    {
+        return $this->hasMany(DetalleVentaModelo::class, 'id_venta', 'id_venta');
+    }
+}   

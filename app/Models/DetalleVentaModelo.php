@@ -12,7 +12,8 @@ class DetalleVentaModelo extends Model
         'id_venta',
         'id_producto',
         'cantidad',
-        'precioUnitario'
+        'precioUnitario',
+        'subtotal' // nuevo campo para el total por línea
     ];
 
     public function venta()

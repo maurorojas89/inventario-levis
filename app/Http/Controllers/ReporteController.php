@@ -6,9 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\ProductoModelo;
 use App\Models\ClienteModelo;
 use App\Models\ProveedorModelo;
-use App\Models\CompraModelo;
-use App\Models\VentaModelo;
-use Illuminate\Support\Facades\DB;
+use App\Models\ReporteModelo;
 
 class ReporteController extends Controller
 {
@@ -19,32 +17,20 @@ class ReporteController extends Controller
         $totalProveedores = ProveedorModelo::count();
         $totalProductos = ProductoModelo::count();
 
-        // Totales de compras y ventas
-        $totalCompras = CompraModelo::sum('total');
-        $totalVentas = VentaModelo::sum('total');
-        $balance = $totalVentas - $totalCompras;
+        // Totales financieros y balance
+        $resumen = ReporteModelo::resumenFinanciero(); // usa tabla 'compra'
 
-        // Agrupación mensual
-        $comprasMensuales = CompraModelo::select(
-          DB::raw('MONTH(fecha) as mes'),
-          DB::raw('SUM(total) as total')
-        )->groupBy('mes')->get();
+        // Agrupaciones mensuales
+        $comprasMensuales = ReporteModelo::comprasMensuales(); // usa tabla 'compra'
+        $ventasMensuales = ReporteModelo::ventasMensuales();   // usa tabla 'ventas'
 
-
-        $ventasMensuales = VentaModelo::select(
-            DB::raw('MONTH(fecha) as mes'),
-            DB::raw('SUM(total) as total')
-        )->groupBy('mes')->get();
-
-        return view('reportes', compact(
-            'totalClientes',
-            'totalProveedores',
-            'totalProductos',
-            'totalCompras',
-            'totalVentas',
-            'balance',
-            'comprasMensuales',
-            'ventasMensuales'
-        ));
+        // Enviar todo a la vista
+        return view('reportes', array_merge([
+            'totalClientes' => $totalClientes,
+            'totalProveedores' => $totalProveedores,
+            'totalProductos' => $totalProductos,
+            'comprasMensuales' => $comprasMensuales,
+            'ventasMensuales' => $ventasMensuales,
+        ], $resumen));
     }
 }

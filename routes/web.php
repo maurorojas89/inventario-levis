@@ -26,10 +26,9 @@ Route::put('/ventas/{id}', [\App\Http\Controllers\VentaController::class, 'updat
 Route::delete('/ventas/{id}', [\App\Http\Controllers\VentaController::class, 'destroy'])->name('ventas.destroy');
 
 // Detalle de venta (agregar y eliminar líneas de producto)
-Route::get('/ventas/{id}/detalle', [\App\Http\Controllers\DetalleVentaController::class, 'index'])->name('detalle_venta.index');
-Route::post('/ventas/{id}/detalle', [\App\Http\Controllers\DetalleVentaController::class, 'store'])->name('detalle_venta.store');
-Route::delete('/ventas/{id}/detalle/{detalleId}', [\App\Http\Controllers\DetalleVentaController::class, 'destroy'])->name('detalle_venta.destroy');
-
+Route::get('/ventas', [VentaController::class, 'index'])->name('ventas.index');
+Route::post('/ventas', [VentaController::class, 'store'])->name('ventas.store');
+Route::resource('ventas', VentaController::class);
 
 // Compras
 Route::get('/compras', [\App\Http\Controllers\CompraController::class, 'index'])->name('compras.index');
