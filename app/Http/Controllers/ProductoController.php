@@ -46,4 +46,11 @@ class ProductoController extends Controller
         ProductoModelo::findOrFail($id)->delete();
         return redirect()->route('productos.index')->with('success', 'Producto eliminado.');
     }
+
+    public function porRol($rol)
+{
+    $productos = Producto::where('rolProducto', $rol)->get();
+    return response()->json($productos);
+}
+
 }

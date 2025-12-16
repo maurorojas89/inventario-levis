@@ -31,7 +31,7 @@
         <a class="nav-link {{ request()->is('productos*') ? 'active' : '' }}" href="{{ route('productos.index') }}">Productos</a>
         <a class="nav-link {{ request()->is('proveedores*') ? 'active' : '' }}" href="{{ route('proveedores.index') }}">Proveedores</a>
         <a class="nav-link {{ request()->is('reportes*') ? 'active' : '' }}" href="{{ route('reportes.index') }}">Reportes</a>
-        <a class="nav-link {{ request()->is('herramientas*') ? 'active' : '' }}" href="{{ route('herramientas.index') }}">Herramientas</a>
+        <a class="nav-link {{ request()->is('herramientas*') ? 'active' : '' }}" href="{{ route('herramienta.index') }}">Herramientas</a>
       </nav>
     </div>
   </aside>

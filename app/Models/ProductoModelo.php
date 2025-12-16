@@ -8,13 +8,24 @@ class ProductoModelo extends Model
 {
     protected $table = 'productos';
     protected $primaryKey = 'id_producto';
-    protected $fillable = [
-        'nombreProducto',
-        'descripcionProducto',
-        'precioProducto',
-        'stockProducto',
-        'estadoProducto'
-    ];
     public $timestamps = false;
 
+    protected $fillable = [
+    'nombreProducto',
+    'descripcionProducto',
+    'precioProducto',
+    'stockProducto',
+    'estadoProducto',
+    'id_proveedor' // este sí existe en la tabla
+];
+
+public function proveedor()
+{
+    return $this->belongsTo(ProveedorModelo::class, 'id_proveedor');
+}
+
+    public function detalles()
+    {
+        return $this->hasMany(DetalleCompra::class, 'id_producto');
+    }
 }

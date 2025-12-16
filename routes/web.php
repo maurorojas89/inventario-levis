@@ -30,10 +30,14 @@ Route::get('/ventas', [VentaController::class, 'index'])->name('ventas.index');
 Route::post('/ventas', [VentaController::class, 'store'])->name('ventas.store');
 Route::resource('ventas', VentaController::class);
 
-// Compras
-Route::get('/compras', [\App\Http\Controllers\CompraController::class, 'index'])->name('compras.index');
-Route::post('/compras', [\App\Http\Controllers\CompraController::class, 'store'])->name('compras.store');
-Route::delete('/compras/{id}', [\App\Http\Controllers\CompraController::class, 'destroy'])->name('compras.destroy');
+// compra 
+Route::get('/compras', [CompraController::class, 'index'])->name('compras.index');
+Route::get('/compras/create', [CompraController::class, 'create'])->name('compras.create');
+Route::post('/compras', [CompraController::class, 'store'])->name('compras.store');
+Route::get('/compras/{id}/detalle', [CompraController::class, 'detalle'])->name('compras.detalle');
+
+Route::get('/compras/{id}/detalle/agregar', [DetalleCompraController::class, 'create'])->name('detalleCompra.create');
+Route::post('/compras/{id}/detalle', [DetalleCompraController::class, 'store'])->name('detalleCompra.store');
 
 
 // Mostrar los productos de una compra
@@ -48,6 +52,8 @@ Route::delete('/compras/{id}/detalle/{detalleId}', [\App\Http\Controllers\Detall
 
 // Productos
 Route::resource('productos', ProductoController::class);
+Route::get('/productos/por-rol/{rol}', [ProductoController::class, 'porRol']);
+
 
 // Proveedores
 Route::get('/proveedores', [\App\Http\Controllers\ProveedorController::class, 'index'])->name('proveedores.index');
@@ -60,4 +66,13 @@ Route::put('/proveedores/{id}', [\App\Http\Controllers\ProveedorController::clas
 Route::resource('reportes', ReporteController::class);
 
 // Herramientas
-Route::resource('herramientas', HerramientaController::class);
+
+Route::prefix('herramientas')->group(function () {
+    Route::get('/logs', [HerramientaController::class, 'logs'])->name('herramienta.logs');
+    Route::get('/tareas', [HerramientaController::class, 'tareas'])->name('herramienta.tareas');
+    Route::get('/accesos', [HerramientaController::class, 'accesos'])->name('herramienta.accesos');
+    Route::get('/', [HerramientaController::class, 'index'])->name('herramienta.index');
+
+}
+);
+

@@ -8,11 +8,13 @@ class DetalleCompraModelo extends Model
 {
     protected $table = 'detalle_compra';
     protected $primaryKey = 'id_detalle';
+
     protected $fillable = [
         'id_compra',
         'id_producto',
         'cantidad',
-        'costoUnitario'
+        'costoUnitario',
+        'subtotal' // ✅ nuevo campo para guardar el cálculo
     ];
 
     public function compra()

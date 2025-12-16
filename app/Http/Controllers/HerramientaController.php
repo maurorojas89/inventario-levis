@@ -3,48 +3,45 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\HerramientaModelo;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Carbon\Carbon;
 
 class HerramientaController extends Controller
 {
+
     public function index()
-    {
-        $herramientas = HerramientaModelo::orderBy('id_herramienta', 'desc')->get();
-        return view('herramientas', compact('herramientas'));
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nombre' => 'required|string|max:100',
-            'descripcion' => 'nullable|string',
-            'cantidad' => 'required|integer|min:0',
-            'unidad' => 'nullable|string|max:20',
-        ]);
-
-        HerramientaModelo::create($request->all());
-        return redirect()->route('herramienta.index')->with('success', 'Herramienta registrada');
-    }
-
-    public function update(Request $request, $id)
-    {
-        $herramienta = HerramientaModelo::findOrFail($id);
-
-        $request->validate([
-            'nombre' => 'required|string|max:100',
-            'descripcion' => 'nullable|string',
-            'cantidad' => 'required|integer|min:0',
-            'unidad' => 'nullable|string|max:20',
-        ]);
-
-        $herramienta->update($request->all());
-        return redirect()->route('herramienta.index')->with('success', 'Herramienta actualizada');
-    }
-
-    public function destroy($id)
-    {
-        HerramientaModelo::findOrFail($id)->delete();
-        return redirect()->route('herramienta.index')->with('success', 'Herramienta eliminada');
-    }
+{
+    return view('herramientas.index');
 }
 
+    //  Historial de errores del sistema
+    public function logs()
+    {
+        $path = storage_path('logs/laravel.log');
+        $logs = File::exists($path) ? File::get($path) : 'No hay registros de errores.';
+        return view('herramientas.logs', compact('logs'));
+    }
+
+    //  Panel de tareas internas
+    public function tareas()
+ {
+    $productosSinProveedor = DB::table('productos')->whereNull('id_proveedor')->get();
+    $pedidosSinCliente = DB::table('pedido')->whereNull('id_cliente')->get();
+
+    return view('herramientas.tareas', compact('productosSinProveedor', 'pedidosSinCliente'));
+ }
+
+
+    //  Control de acceso
+    
+ public function accesos()
+ {
+    $sessions = DB::table('sessions')->get()->map(function ($session) {
+        $session->last_activity = Carbon::createFromTimestamp($session->last_activity)->toDateTimeString();
+        return $session;
+    });
+
+    return view('herramientas.accesos', compact('sessions'));
+ }
+}

@@ -8,22 +8,25 @@ class DetalleCompra extends Model
 {
     protected $table = 'detalle_compra';
     protected $primaryKey = 'id_detalle';
-    public $timestamps = true;
+    public $timestamps = false;
 
     protected $fillable = [
         'id_compra',
         'id_producto',
         'cantidad',
-        'costoUnitario'
+        'precio_unitario',
+        'subtotal'
     ];
 
-    public function producto()
-    {
-        return $this->belongsTo(ProductoModelo::class, 'id_producto');
-    }
-
+    // Relación con la compra
     public function compra()
     {
         return $this->belongsTo(CompraModelo::class, 'id_compra');
     }
+
+    // Relación con el producto
+    public function producto() {
+    return $this->belongsTo(ProductoModelo::class, 'id_producto', 'id_producto');
+}
+
 }

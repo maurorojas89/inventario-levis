@@ -2,17 +2,27 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class HerramientaModelo extends Model
+class Herramienta extends Model
 {
-    protected $table = 'herramienta';
-    protected $primaryKey = 'id_herramienta';
-    public $incrementing = true;
-    protected $keyType = 'int';
-    public $timestamps = true;
+    use HasFactory;
 
+    // Nombre de la tabla en la BD
+    protected $table = 'herramienta';
+
+    // Clave primaria
+    protected $primaryKey = 'id_herramienta';
+
+    // Campos que se pueden asignar masivamente
     protected $fillable = [
-        'nombre', 'descripcion', 'cantidad', 'unidad'
+        'nombre',
+        'descripcion',
+        'cantidad',
+        'fecha_ingreso',
     ];
+
+    // Si no usas timestamps en esta tabla
+    public $timestamps = false;
 }
