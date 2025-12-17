@@ -12,16 +12,62 @@
   @stack('styles')
 
   <style>
-      body { min-height: 100vh; }
-      .sidebar { width: 240px; }
+      body {
+        min-height: 100vh;
+        background-color: #1a1a1a;
+        color: #fff;
+      }
       .app { display: flex; }
-      .content { flex: 1; }
-      .nav-link.active { font-weight: 600; }
+
+      /* Sidebar */
+      .sidebar {
+        width: 240px;
+        background-color: #2a2a2a !important;
+        color: #fff;
+      }
+      .sidebar h5 {
+        color: #C70202;
+      }
+      .nav-link {
+        color: #ddd;
+      }
+      .nav-link.active, .nav-link:hover {
+        color: #fff;
+        background-color: #C70202;
+      }
+
+      /* Header/Navbar */
+      header {
+        background-color: #2a2a2a !important;
+        color: #fff;
+        border-bottom: 2px solid #C70202;
+      }
+      header h1 {
+        color: #C70202;
+      }
+      .btn-outline-secondary {
+        border-color: #C70202;
+        color: #C70202;
+      }
+      .btn-outline-secondary:hover {
+        background-color: #C70202;
+        color: #fff;
+      }
+
+      /* Footer */
+      footer {
+        background-color: #2a2a2a;
+        color: #aaa;
+        border-top: 2px solid #C70202;
+        text-align: center;
+        padding: 10px;
+        font-size: 0.9rem;
+      }
   </style>
 </head>
 <body>
 <div class="app">
-  <aside class="sidebar bg-light border-end">
+  <aside class="sidebar border-end">
     <div class="p-3">
       <h5 class="mb-3">SIPA</h5>
       <nav class="nav flex-column">
@@ -36,20 +82,30 @@
     </div>
   </aside>
 
-  <main class="content">
-    <header class="border-bottom bg-white">
+  <main class="content d-flex flex-column flex-grow-1">
+    <header class="border-bottom">
       <div class="container-fluid py-3 d-flex justify-content-between align-items-center">
         <h1 class="h5 m-0">@yield('title', 'Panel')</h1>
         <div>
           <span class="text-muted">Usuario</span>
-          <a href="#" class="btn btn-sm btn-outline-secondary ms-2">Cerrar sesión</a>
+          <!-- Botón de cerrar sesión -->
+          <form method="POST" action="{{ route('logout') }}" class="d-inline">
+              @csrf
+              <button type="submit" class="btn btn-sm btn-outline-secondary ms-2">
+                  Cerrar sesión
+              </button>
+          </form>
         </div>
       </div>
     </header>
 
-    <div class="container-fluid py-4">
+    <div class="container-fluid py-4 bg-dark text-white flex-grow-1">
       @yield('content')
     </div>
+
+    <footer class="bg-dark text-white border-top border-danger text-center py-2">
+      <small>&copy; {{ date('Y') }} SIPA - Panel de Control</small>
+    </footer>
   </main>
 </div>
 

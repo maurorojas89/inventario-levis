@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\ProductoModelo;
 use App\Models\ClienteModelo;
 use App\Models\ProveedorModelo;
-use App\Models\ReporteModelo;
+use App\Models\ReporteModelo; // ✅ aquí importas el modelo
 
 class ReporteController extends Controller
 {
@@ -18,13 +18,12 @@ class ReporteController extends Controller
         $totalProductos = ProductoModelo::count();
 
         // Totales financieros y balance
-        $resumen = ReporteModelo::resumenFinanciero(); // usa tabla 'compra'
+        $resumen = ReporteModelo::resumenFinanciero();
 
         // Agrupaciones mensuales
-        $comprasMensuales = ReporteModelo::comprasMensuales(); // usa tabla 'compra'
-        $ventasMensuales = ReporteModelo::ventasMensuales();   // usa tabla 'ventas'
+        $comprasMensuales = ReporteModelo::comprasMensuales();
+        $ventasMensuales = ReporteModelo::ventasMensuales();
 
-        // Enviar todo a la vista
         return view('reportes', array_merge([
             'totalClientes' => $totalClientes,
             'totalProveedores' => $totalProveedores,

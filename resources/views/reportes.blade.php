@@ -1,88 +1,161 @@
 @extends('layouts.app')
-@section('title', 'Módulo Reportes')
+
+@section('title', 'Reportes')
+
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-3">
-  <h2 class="h5 m-0">Módulo Reportes</h2>
+<style>
+    body {
+        background-color: #1a1a1a;
+        color: #fff;
+    }
+    h1 {
+        color: #C70202;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .card {
+        background-color: #2a2a2a;
+        border: none;
+        box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        margin-bottom: 20px;
+    }
+    .card-header {
+        background-color: #C70202;
+        color: #fff;
+        font-weight: bold;
+    }
+    .card-body {
+        color: #ddd;
+    }
+    .table {
+        background-color: #2a2a2a;
+        color: #fff;
+    }
+    .table thead {
+        background-color: #C70202;
+        color: #fff;
+    }
+    .btn-outline-primary {
+        border-color: #C70202;
+        color: #C70202;
+    }
+    .btn-outline-primary:hover {
+        background-color: #C70202;
+        color: #fff;
+    }
+    .btn-outline-danger {
+        border-color: #ff4444;
+        color: #ff4444;
+    }
+    .btn-outline-danger:hover {
+        background-color: #ff4444;
+        color: #fff;
+    }
+</style>
+
+<div class="container">
+    <h1>Panel de Reportes</h1>
+
+    {{-- Totales simples --}}
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header">Clientes</div>
+                <div class="card-body">
+                    <p class="h4">{{ $totalClientes }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header">Proveedores</div>
+                <div class="card-body">
+                    <p class="h4">{{ $totalProveedores }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header">Productos</div>
+                <div class="card-body">
+                    <p class="h4">{{ $totalProductos }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Totales financieros --}}
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header">Total Compras</div>
+                <div class="card-body">
+                    <p class="h4">${{ number_format($totalCompras, 0, ',', '.') }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header">Total Ventas</div>
+                <div class="card-body">
+                    <p class="h4">${{ number_format($totalVentas, 0, ',', '.') }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-header">Balance</div>
+                <div class="card-body">
+                    <p class="h4">${{ number_format($balance, 0, ',', '.') }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Compras mensuales --}}
+    <div class="card mb-4">
+        <div class="card-header">Compras Mensuales</div>
+        <div class="card-body">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Mes</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($comprasMensuales as $c)
+                        <tr>
+                            <td>{{ $c->mes }}</td>
+                            <td>${{ number_format($c->total, 0, ',', '.') }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {{-- Ventas mensuales --}}
+    <div class="card mb-4">
+        <div class="card-header">Ventas Mensuales</div>
+        <div class="card-body">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Mes</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($ventasMensuales as $v)
+                        <tr>
+                            <td>{{ $v->mes }}</td>
+                            <td>${{ number_format($v->total, 0, ',', '.') }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-
-<div class="row g-3">
-  <div class="col-md-3">
-    <div class="card text-center">
-      <div class="card-body">
-        <h6 class="card-title">Clientes</h6>
-        <p class="h4">{{ $totalClientes }}</p>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="card text-center">
-      <div class="card-body">
-        <h6 class="card-title">Proveedores</h6>
-        <p class="h4">{{ $totalProveedores }}</p>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="card text-center">
-      <div class="card-body">
-        <h6 class="card-title">Productos</h6>
-        <p class="h4">{{ $totalProductos }}</p>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <div class="card text-center">
-      <div class="card-body">
-        <h6 class="card-title">Balance</h6>
-        <p class="h4">${{ number_format($balance, 0, ',', '.') }}</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<hr>
-
-<h5 class="mt-4">Totales</h5>
-<ul>
-  <li>Total Compras: ${{ number_format($totalCompras, 0, ',', '.') }}</li>
-  <li>Total Ventas: ${{ number_format($totalVentas, 0, ',', '.') }}</li>
-</ul>
-
-<hr>
-
-<h5 class="mt-4">Compras por mes</h5>
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>Mes</th>
-      <th>Total</th>
-    </tr>
-  </thead>
-  <tbody>
-    @foreach($comprasMensuales as $c)
-      <tr>
-        <td>{{ \Carbon\Carbon::create()->month($c->mes)->locale('es')->monthName }}</td>
-        <td>${{ number_format($c->total, 0, ',', '.') }}</td>
-      </tr>
-    @endforeach
-  </tbody>
-</table>
-
-<h5 class="mt-4">Ventas por mes</h5>
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>Mes</th>
-      <th>Total</th>
-    </tr>
-  </thead>
-  <tbody>
-    @foreach($ventasMensuales as $v)
-      <tr>
-        <td>{{ \Carbon\Carbon::create()->month($v->mes)->locale('es')->monthName }}</td>
-        <td>${{ number_format($v->total, 0, ',', '.') }}</td>
-      </tr>
-    @endforeach
-  </tbody>
-</table>
 @endsection

@@ -3,8 +3,92 @@
 @section('title', 'Gestión de Proveedores')
 
 @section('content')
+<style>
+    body {
+        background-color: #1a1a1a;
+        color: #fff;
+    }
+    h1 {
+        color: #C70202;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .card {
+        background-color: #2a2a2a;
+        border: none;
+        box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
+    .card-header {
+        background-color: #C70202;
+        color: #fff;
+        font-weight: bold;
+    }
+    .form-label {
+        color: #ddd;
+    }
+    .form-control, .form-select, textarea {
+        background-color: #1a1a1a;
+        color: #fff;
+        border: 1px solid #444;
+    }
+    .form-control:focus, .form-select:focus, textarea:focus {
+        border-color: #C70202;
+        box-shadow: none;
+    }
+    .btn-success {
+        background-color: #C70202;
+        border: none;
+    }
+    .btn-success:hover {
+        background-color: #a00101;
+    }
+    .btn-secondary {
+        background-color: #444;
+        border: none;
+        color: #fff;
+    }
+    .btn-secondary:hover {
+        background-color: #666;
+    }
+    .table {
+        background-color: #2a2a2a;
+        color: #fff;
+    }
+    .table thead {
+        background-color: #C70202;
+        color: #fff;
+    }
+    .btn-outline-primary {
+        border-color: #C70202;
+        color: #C70202;
+    }
+    .btn-outline-primary:hover {
+        background-color: #C70202;
+        color: #fff;
+    }
+    .btn-outline-danger {
+        border-color: #ff4444;
+        color: #ff4444;
+    }
+    .btn-outline-danger:hover {
+        background-color: #ff4444;
+        color: #fff;
+    }
+    .modal-content {
+        background-color: #2a2a2a;
+        color: #fff;
+    }
+    .modal-header {
+        background-color: #C70202;
+        color: #fff;
+    }
+    .modal-footer {
+        background-color: #1a1a1a;
+    }
+</style>
+
 <div class="container">
-    <h1 class="mb-3">Módulo Proveedores</h1>
+    <h1>Módulo Proveedores</h1>
 
     @if(session('success'))
       <div class="alert alert-success">{{ session('success') }}</div>
@@ -72,7 +156,7 @@
     </div>
 
     <table class="table table-bordered table-hover">
-        <thead class="table-dark">
+        <thead>
             <tr>
                 <th>#</th>
                 <th>Nombre</th>
@@ -134,46 +218,36 @@
                   <input type="text" name="empresa" class="form-control" value="{{ $p->empresa }}">
                 </div>
                 <div class="col-md-4">
-                  <label class="form-label">Rol</label>
-                  <select name="rolProveedor" class="form-select">
-                    @foreach([
-                        'Prendas de cabeza',
-                        'Camisetas',
-                        'Camisas',
-                        'Pantalones',
-                        'Zapatos',
-                        'Interiores',
-                        'Chaquetas',
-                        'Accesorios',
-                        'Ropa infantil',
-                        'Ropa deportiva'
-                    ] as $rol)
-                      <option value="{{ $rol }}" @if($p->rolProveedor == $rol) selected @endif>{{ $rol }}</option>
-                    @endforeach
-                  </select>
-                </div>
-                <div class="col-md-4">
-                  <label class="form-label">Teléfono</label>
-                  <input type="text" name="telefonoProveedor" class="form-control" value="{{ $p->telefonoProveedor }}">
-                </div>
-                <div class="col-md-4">
-                  <label class="form-label">Correo</label>
-                  <input type="email" name="correoProveedor" class="form-control" value="{{ $p->correoProveedor }}">
-                </div>
-                <div class="col-md-4">
-                  <label class="form-label">Dirección</label>
-                  <textarea name="direccion" class="form-control" rows="1">{{ $p->direccion }}</textarea>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Guardar cambios</button>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
+  <label class="form-label">Rol</label>
+  <select name="rolProveedor" class="form-select">
+    @foreach([
+        'Prendas de cabeza',
+        'Camisetas',
+        'Camisas',
+        'Pantalones',
+        'Zapatos',
+        'Interiores',
+        'Chaquetas',
+        'Accesorios',
+        'Ropa infantil',
+        'Ropa deportiva'
+    ] as $rol)
+      <option value="{{ $rol }}" {{ $p->rolProveedor === $rol ? 'selected' : '' }}>
+        {{ $rol }}
+      </option>
     @endforeach
+  </select>
 </div>
+            </div> <!-- cierre row -->
+          </div> <!-- cierre modal-body -->
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </div> <!-- cierre modal-content -->
+      </form>
+    </div> <!-- cierre modal-dialog -->
+  </div> <!-- cierre modal -->
+@endforeach
+</div> <!-- cierre container -->
 @endsection

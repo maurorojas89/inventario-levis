@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DetalleCompraModelo extends Model
+class DetalleCompra extends Model
 {
     protected $table = 'detalle_compra';
     protected $primaryKey = 'id_detalle';
@@ -14,7 +14,7 @@ class DetalleCompraModelo extends Model
         'id_producto',
         'cantidad',
         'costoUnitario',
-        'subtotal' // ✅ nuevo campo para guardar el cálculo
+        'subtotal',
     ];
 
     public function compra()

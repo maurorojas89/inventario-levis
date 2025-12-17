@@ -1,6 +1,88 @@
 @extends('layouts.app')
 
+@section('title', 'Gestión de Ventas')
+
 @section('content')
+<style>
+    body {
+        background-color: #1a1a1a;
+        color: #fff;
+    }
+    h2 {
+        color: #C70202;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .card {
+        background-color: #3d3f3fff;
+        border: none;
+        box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        margin-bottom: 20px;
+    }
+    .card-header {
+        background-color: #C70202;
+        color: #fff;
+        font-weight: bold;
+    }
+    .form-label {
+        color: #ddd;
+    }
+    .form-control, .form-select, textarea {
+        background-color: #1a1a1a;
+        color: #fff;
+        border: 1px solid #991212ff;
+    }
+    .form-control:focus, .form-select:focus, textarea:focus {
+        border-color: #C70202;
+        box-shadow: none;
+    }
+    .btn-success {
+        background-color: #C70202;
+        border: none;
+    }
+    .btn-success:hover {
+        background-color: #a00101;
+    }
+    .btn-secondary {
+        background-color: #444;
+        border: none;
+        color: #fff;
+    }
+    .btn-secondary:hover {
+        background-color: #666;
+    }
+    .btn-primary {
+        background-color: #C70202;
+        border: none;
+    }
+    .btn-primary:hover {
+        background-color: #a00101;
+    }
+    .btn-danger {
+        background-color: #ff4444;
+        border: none;
+    }
+    .btn-danger:hover {
+        background-color: #cc0000;
+    }
+    .btn-outline-danger {
+        border-color: #ff4444;
+        color: #ff4444;
+    }
+    .btn-outline-danger:hover {
+        background-color: #ff4444;
+        color: #fff;
+    }
+    .table {
+        background-color: #474f4aff;
+        color: #fff;
+    }
+    .table thead {
+        background-color: #C70202;
+        color: #fff;
+    }
+</style>
+
 <div class="container">
     <h2>Gestión de Ventas</h2>
 
@@ -17,6 +99,7 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
+    {{-- Formulario de registro --}}
     <div class="card mb-4">
         <div class="card-header">Registrar Venta</div>
         <div class="card-body">
@@ -66,10 +149,11 @@
         </div>
     </div>
 
+    {{-- Listado de ventas --}}
     <div class="card">
         <div class="card-header">Listado de Ventas</div>
         <div class="card-body">
-            <table class="table table-striped">
+            <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -108,7 +192,7 @@
     </div>
 </div>
 
-{{-- Script para manejar productos dinámicos --}}
+{{-- Script dinámico de productos (mantén tu código JS original) --}}
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const productos = @json($productos);
@@ -201,6 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 row.remove();
             } else {
                 filasValidas++;
+            
             }
         });
 
@@ -209,6 +294,5 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Debes agregar al menos un producto con cantidad válida.');
         }
     });
-});
-</script>
+});</script>
 @endsection

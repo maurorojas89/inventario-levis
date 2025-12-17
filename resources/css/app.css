@@ -11,6 +11,7 @@
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
+    /* Paleta base */
     --color-zinc-50: #fafafa;
     --color-zinc-100: #f5f5f5;
     --color-zinc-200: #e5e5e5;
@@ -23,27 +24,109 @@
     --color-zinc-900: #171717;
     --color-zinc-950: #0a0a0a;
 
-    --color-accent: var(--color-neutral-800);
-    --color-accent-content: var(--color-neutral-800);
+    /* Acento rojo */
+    --color-accent: #C70202;
+    --color-accent-content: #C70202;
     --color-accent-foreground: var(--color-white);
 }
 
 @layer theme {
     .dark {
-        --color-accent: var(--color-white);
-        --color-accent-content: var(--color-white);
-        --color-accent-foreground: var(--color-neutral-800);
+        --color-accent: #C70202;
+        --color-accent-content: #C70202;
+        --color-accent-foreground: var(--color-white);
     }
 }
 
 @layer base {
+    body {
+        @apply bg-zinc-900 text-white min-h-screen;
+        font-family: var(--font-sans);
+    }
 
-    *,
-    ::after,
-    ::before,
-    ::backdrop,
-    ::file-selector-button {
-        border-color: var(--color-gray-200, currentColor);
+    h1, h2, h3, h4, h5 {
+        color: #C70202;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        @apply bg-zinc-800 text-white;
+    }
+    .sidebar h5 {
+        color: #C70202;
+    }
+    .sidebar .nav-link {
+        color: #ddd;
+    }
+    .sidebar .nav-link.active,
+    .sidebar .nav-link:hover {
+        background-color: #C70202;
+        color: #fff;
+    }
+
+    /* Header */
+    header {
+        @apply bg-zinc-800 text-white border-b-2;
+        border-color: #C70202;
+    }
+    header h1 {
+        color: #C70202;
+    }
+
+    /* Tablas */
+    .table {
+        @apply bg-zinc-800 text-white;
+    }
+    .table thead {
+        background-color: #C70202;
+        color: #fff;
+    }
+    .table tbody tr:hover {
+        @apply bg-zinc-700;
+    }
+
+    /* Formularios */
+    .form-label {
+        color: #ddd;
+    }   
+    .form-control, .form-select {
+        @apply bg-zinc-900 text-white border border-zinc-600;
+    }
+    .form-control:focus, .form-select:focus {
+        border-color: #C70202;
+        box-shadow: none;
+    }
+
+    /* Botones */
+    .btn-primary {
+        background-color: #C70202;
+        border: none;
+    }
+    .btn-primary:hover {
+        background-color: #a00101;
+    }
+    .btn-secondary {
+        background-color: #444;
+        border: none;
+        color: #fff;
+    }
+    .btn-secondary:hover {
+        background-color: #666;
+    }
+    .btn-danger {
+        background-color: #ff4444;
+        border: none;
+    }
+    .btn-danger:hover {
+        background-color: #cc0000;
+    }
+    .btn-outline-secondary {
+        border-color: #C70202;
+        color: #C70202;
+    }
+    .btn-outline-secondary:hover {
+        background-color: #C70202;
+        color: #fff;
     }
 }
 
@@ -52,7 +135,7 @@
 }
 
 [data-flux-label] {
-    @apply  !mb-0 !leading-tight;
+    @apply !mb-0 !leading-tight;
 }
 
 input:focus[data-flux-control],
@@ -60,7 +143,3 @@ textarea:focus[data-flux-control],
 select:focus[data-flux-control] {
     @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
 }
-
-/* \[:where(&)\]:size-4 {
-    @apply size-4;
-} */

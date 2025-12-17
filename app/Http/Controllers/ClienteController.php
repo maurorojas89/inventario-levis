@@ -83,14 +83,27 @@ class ClienteController extends Controller
     }
 
     // Eliminar cliente (sin verificación de pedidos)
-    public function destroy($id)
-    {
-        try {
-            ClienteModelo::findOrFail($id)->delete();
-            return redirect()->route('clientes.index')->with('success', 'Cliente eliminado correctamente.');
-        } catch (\Exception $e) {
-            return redirect()->route('clientes.index')->with('error', 'Error al eliminar el cliente: ' . $e->getMessage());
+   public function destroy($id)
+{
+    try {
+        ClienteModelo::findOrFail($id)->delete();
+
+        return redirect()->route('clientes.index')
+            ->with('success', 'Cliente eliminado correctamente.');
+    } catch (\Illuminate\Database\QueryException $e) {
+        // Error de clave foránea (no se puede borrar porque tiene ventas asociadas)
+        if ($e->getCode() == "23000") {
+            return redirect()->route('clientes.index')
+                ->with('error', 'No se puede eliminar el cliente porque tiene ventas asociadas.');
         }
+
+        // Otros errores de base de datos
+        return redirect()->route('clientes.index')
+            ->with('error', 'Ocurrió un error al eliminar el cliente.');
+    } catch (\Exception $e) {
+        // Cualquier otro error inesperado
+        return redirect()->route('clientes.index')
+            ->with('error', 'Ocurrió un error inesperado.');
     }
 }
-    
+}

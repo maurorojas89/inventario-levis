@@ -3,14 +3,95 @@
 @section('title', 'Gestión de Clientes')
 
 @section('content')
+<style>
+    body {
+        background-color: #1a1a1a;
+        color: #fff;
+    }
+    h1 {
+        color: #C70202;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .card {
+        background-color: #2a2a2a;
+        border: none;
+        box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
+    .card-header {
+        background-color: #C70202;
+        color: #fff;
+        font-weight: bold;
+    }
+    .form-label {
+        color: #ddd;
+    }
+    .form-control, .form-select, textarea {
+        background-color: #1a1a1a;
+        color: #fff;
+        border: 1px solid #444;
+    }
+    .form-control:focus, .form-select:focus, textarea:focus {
+        border-color: #C70202;
+        box-shadow: none;
+    }
+    .btn-success {
+        background-color: #C70202;
+        border: none;
+    }
+    .btn-success:hover {
+        background-color: #a00101;
+    }
+    .btn-secondary {
+        background-color: #444;
+        border: none;
+        color: #fff;
+    }
+    .btn-secondary:hover {
+        background-color: #666;
+    }
+    .table {
+        background-color: #2a2a2a;
+        color: #fff;
+    }
+    .table thead {
+        background-color: #C70202;
+        color: #fff;
+    }
+    .btn-outline-primary {
+        border-color: #C70202;
+        color: #C70202;
+    }
+    .btn-outline-primary:hover {
+        background-color: #C70202;
+        color: #fff;
+    }
+    .btn-outline-danger {
+        border-color: #ff4444;
+        color: #ff4444;
+    }
+    .btn-outline-danger:hover {
+        background-color: #ff4444;
+        color: #fff;
+    }
+</style>
+
 <div class="container">
-    <h1 class="mb-4">Módulo Clientes</h1>
+    <h1>Módulo Clientes</h1>
 
     {{-- Mensajes de éxito/error --}}
     @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @elseif(session('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>✔ Éxito:</strong> {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>⚠ Atención:</strong> {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+        </div>
     @endif
 
     {{-- Formulario para crear o editar cliente --}}
@@ -20,13 +101,14 @@
         </div>
         <div class="card-body">
             @if($errors->any())
-                <div class="alert alert-danger">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <strong>Errores:</strong>
                     <ul>
                         @foreach($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
                 </div>
             @endif
 
@@ -92,7 +174,7 @@
 
     {{-- Tabla de clientes --}}
     <table class="table table-bordered table-hover">
-        <thead class="table-dark">
+        <thead>
             <tr>
                 <th>DOCUMENTO</th>
                 <th>TIPO</th>
